@@ -1,0 +1,381 @@
+#include<iostream>
+#include<stdlib.h>
+#include<time.h>
+#include<string>
+using namespace std;
+int score_result = 0;
+int score_result2 = 0;
+int game_number = 0;
+bool tester(char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9);
+void toe(char turn, char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9);
+void toe2(char AI, char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9);
+void shape(char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9);
+void menu_main();
+void creditz();
+void instruction();
+void score();
+int main()
+{
+	int Player1, Player2;
+	menu_main();
+	int menu = 0;
+	bool flag = true, result = true;
+	int A = 0;
+	int num = 0, num2 = 0, num3 = 0, num4 = 0;
+	char n1 = '1', n2 = '2', n3 = '3', n4 = '4', n5 = '5', n6 = '6', n7 = '7', n8 = '8', n9 = '9';
+	char turn, turn2;
+	int toss, toss_check, mode;
+	char AI = '0';
+	string player1, player2;
+	cin >> menu;
+	switch (menu)
+	{
+	case 1:
+		system("cls");
+		cout << "\n\n\n" << endl;
+		cout << "\tPress 0 for Player Vs Player and 1 for Player Vs AI : ";
+		cin >> mode;
+		if (mode == 0)
+		{
+			game_number++;
+			cout << "\n" << endl;
+			cout << "  Enter the name of first player:  " << endl;
+			cin >> player1;
+			cout << endl;
+			cout << "\n" << endl;
+			cout << "    Enter the name of second player:" << endl;
+			cin >> player2;
+			cout << endl;
+			cout << "\n" << endl;
+			cout << "    Press 0 for HEADS or 1 for TAILS: " << endl;
+			cin >> toss;
+			cout << endl;
+			cout << endl;
+			cout << endl;
+			srand(time(0));
+			toss_check = rand() % 2;
+			if (toss_check == toss)
+			{
+				flag = true;
+				cout << "*****" << endl;
+				cout << player1 << "   has Won the TOSS!" << endl;
+				cout << player1 << "   its your turn,make a move" << endl;
+			}
+			else
+			{
+				flag = false;
+				cout << "******" << endl;
+				cout << player2 << "   has Won the TOSS!";
+				cout << player2 << "   its your turn,make a move" << endl;
+			}
+			cout << endl;
+			if (flag == true)
+			{
+				cout << "*****" << endl;
+				cout << player1 << "   Enter a position btw 1-9:" << endl;
+			}
+			else
+				cout << player2 << "   Enter a position btw 1-9:" << endl;
+			while (tester(n1, n2, n3, n4, n5, n6, n7, n8, n9))
+			{
+				if (flag == true)
+				{
+					A = 1;
+					flag = false;
+					cin >> turn;
+					while (num3 == turn || turn == num4)
+					{
+						cout << "\nPLAY MOVE AGAIN,Enter again!";
+						cin >> turn;
+					}
+					num3 = turn;
+					toe(turn, n1, n2, n3, n4, n5, n6, n7, n8, n9);
+					system("cls");
+					cout << "  Now turn for" << player2;
+					shape(n1, n2, n3, n4, n5, n6, n7, n8, n9);
+				}
+				else
+				{
+					A = 2;
+					flag = true;
+					cin >> turn2;
+					while (num4 == turn2 || turn2 == num3)
+					{
+						cout << "\nPLAY MOVE AGAIN,Enter again!";
+						cin >> turn2;
+					}
+					num4 = turn2;
+					toe2(turn2, n1, n2, n3, n4, n5, n6, n7, n8, n9);
+					system("cls");
+					cout << "Now turn for " << player1;
+					shape(n1, n2, n3, n4, n5, n6, n7, n8, n9);
+				}
+			}
+			if (A == 1)
+			{
+
+				score_result++;
+				cout << "****" << endl;
+				cout << "Player1"<< "Score is " << score_result << endl;
+				cout << "Player2" << " Score is " << score_result2 << endl;
+				cout << "Number of Games: " << game_number << endl;
+				cout << "****" << endl;
+				system("cls");
+
+				cout << player1 << "CONGRATULATIONS ";
+			}
+			else
+			{
+
+				score_result2++;
+				cout << "****" << endl;
+				cout << "Player1's Score is " << score_result << endl;
+				cout << "Player2's Score is " << score_result2 << endl;
+				cout << "Number of Games:" << game_number << endl;
+				cout << "****" << endl;
+				system("cls");
+				cout << player2 << "CONGRATULATIONS";
+			}
+		}
+		else
+		{
+			game_number++;
+			cout << "  Enter the name of first player:" << endl;
+			cin >> player1;
+			cout << "  Enter the name of  AI:" << endl;
+			cin >> player2;
+			cout << "Press 0 for HEADS or 1 for TAILS: " << endl;
+			cin >> toss;
+			cout << endl;
+			cout << endl;
+			cout << endl;
+			srand(time(0));
+			toss_check = rand() % 2;
+			if (toss_check == toss)
+			{
+				flag = true;
+				cout << player1 << " has Won the TOSS!" << endl;
+				cout << player1 << " its your turn,make a move" << endl;
+			}
+			else
+			{
+				flag = false;
+				cout << player2 << " has Won the TOSS!";
+				cout << player2 << " is making a MOVE" << endl;
+			}
+			cout << endl;
+			if (flag == true)
+				cout << player1 << " Enter a position btw 1-9:";
+			int c = 1;
+			while (tester(n1, n2, n3, n4, n5, n6, n7, n8, n9))
+			{
+				if (flag == true)
+				{
+					A = 1;
+					flag = false;
+					cin >> turn;
+					while (num2 == turn || turn == num3)
+					{
+						cout << "Foul Move,Enter again!";
+						cin >> turn;
+					}
+					num2 = turn;
+					toe(turn, n1, n2, n3, n4, n5, n6, n7, n8, n9);
+					system("cls");
+					shape(n1, n2, n3, n4, n5, n6, n7, n8, n9);
+					cout << player2 << " is making a move";
+				}
+				else
+				{
+					A = 2;
+					flag = true;
+					srand(time(0));
+					AI = ((rand() % 9) + 49);
+					if (num == AI)
+					{
+						srand(time(0));
+						AI = ((rand() % 9) + 49);
+					}
+					num = AI;
+					num3 = AI;
+					toe2(AI, n1, n2, n3, n4, n5, n6, n7, n8, n9);
+					system("cls");
+					shape(n1, n2, n3, n4, n5, n6, n7, n8, n9);
+					cout << "Now its " << player1 << "'s turn!";
+				}
+			}
+			cout << endl;
+			cout << "****" << endl;
+			if (A == 1)
+			{
+				score_result++;
+				cout << "****" << endl;
+				cout << "Player1's Score is " << score_result << endl;
+				cout << "Player2's Score is " << score_result2 << endl;
+				cout << "Number of Games:" << game_number << endl;
+				cout << "****" << endl;
+				system("cls");
+				cout << player1 << "CONGRATULATIONS";
+			}
+			else
+			{
+				score_result2++;
+				cout << "****" << endl;
+				cout << "Player1's Score is " << score_result << endl;
+				cout << "Player2's Score is " << score_result2 << endl;
+				cout << "Number of Games:" << game_number << endl;
+				cout << "****" << endl;
+				system("cls");
+				cout << player2 << "CONGRATULATIONS";
+			}
+			cout << "****" << endl;
+		}
+		break;
+	case 2:
+		system("cls");
+		creditz();
+		break;
+	case 3:
+		system("cls");
+		instruction();
+		break;
+	case 4:
+		system("cls");
+		score();
+		break;
+	default:
+		system("cls");
+		cout << "****" << endl;
+		cout << "MOVE MAKE WAY FOR THE KING" << endl;
+		cout << "****" << endl;
+		break;
+	}
+
+	cout << endl;
+	system("pause>0");
+}
+bool tester(char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9)
+{
+	if ((n1 == n2 && n2 == n3) || (n4 == n5 && n5 == n6) || (n7 == n8 && n8 == n9) || (n1 == n4 && n4 == n7) || (n2 == n5 && n5 == n8) || (n3 == n6 && n6 == n9) || (n1 == n5 && n5 == n9) || (n3 == n5 && n5 == n7))
+		return false;
+	else
+		return true;
+}
+void toe(char turn, char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9)
+{
+	switch (turn)
+	{
+	case '1':
+		n1 = 'O';
+		break;
+	case '2':
+		n2 = 'O';
+		break;
+	case '3':
+		n3 = 'O';
+		break;
+	case '4':
+		n4 = 'O';
+		break;
+	case '5':
+		n5 = 'O';
+		break;
+	case '6':
+		n6 = 'O';
+		break;
+	case '7':
+		n7 = 'O';
+		break;
+	case '8':
+		n8 = 'O';
+		break;
+	case '9':
+		n9 = 'O';
+		break;
+	default:
+		cout << "Incorrect input" << endl;
+		break;
+	}
+}
+void toe2(char AI, char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9)
+{
+	switch (AI)
+	{
+	case '1':
+		n1 = 'X';
+		break;
+	case '2':
+		n2 = 'X';
+		break;
+	case '3':
+		n3 = 'X';
+		break;
+	case '4':
+		n4 = 'X';
+		break;
+	case '5':
+		n5 = 'X';
+		break;
+	case '6':
+		n6 = 'X';
+		break;
+	case '7':
+		n7 = 'X';
+		break;
+	case '8':
+		n8 = 'X';
+		break;
+	case '9':
+		n9 = 'X';
+		break;
+	default:
+		cout << "Incorrect input" << endl;
+		break;
+	}
+}
+void shape(char& n1, char& n2, char& n3, char& n4, char& n5, char& n6, char& n7, char& n8, char& n9)
+{
+	cout << endl;
+	cout << "         "    << n1 <<    "     |      "    << n2 <<    "     |    "    << n3 <<    "  " << endl;
+	cout << "         ______|____________|______" << endl;
+	cout << "         "    << n4 <<    "     |      "    << n5 <<    "     |    "    << n6 <<    "  " << endl;
+	cout << "         ______|____________|______" << endl;
+	cout << "         "    << n7 <<    "     |      "    << n8 <<    "     |    "    << n9 <<    "  " << endl;
+	cout << "               |            |       " << endl;
+}
+void menu_main()
+{
+	cout << "\t\t\t^^^^^^^^^^^^^^^^^^^^^TIC TAC TOE^^^^^^^^^^^^^^^^^^^^^^^^^" << endl;
+	cout << endl;
+	cout << "\t\t\t++++++++++++++++++++++++++++++++++++++++++++\n" << endl;
+	cout << "\t\t\t      \n  \t\t\t\t Enter 1 to Play the Game\t\t\t" << endl;
+	cout << "\t\t\t      \n  \t\t\t\t Enter 2 for Credits   " << endl;
+	cout << "\t\t\t     \n \t\t\t\t Enter 3 for Instructions" << endl;
+	cout << "\t\t\t    \n \t\t\t\t Enter 4 for to Score  " << endl;
+	cout << "\n\t\t\t++++++++++++++++++++++++++++++++++++++++++++" << endl;
+}
+void creditz()
+{
+	cout << "\n\n\n\t\t\t\t**   MADE BY   ***" << endl;
+	cout << "\n\n \t\t\t        Muhammad Adil      " << endl;
+	cout << "\n\n\n\t\t\t\t*****" << endl;
+}
+void instruction()
+{
+
+	cout << "/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\n\n\n";
+	cout << "JUST TIC IT THEN TAC IT BUT PLEASE NEVER GET TOE" << endl;
+	cout << "NOTE: Do no use the same box with an existing symbol!" << endl;
+	cout << "\n\n\n\n\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/\/";
+}
+void score()
+{
+	cout << "****" << endl;
+	cout << "Player1's Score is " << score_result << endl;
+	cout << "\n\n";
+	cout << "Player2's Score is " << score_result2 << endl;
+	cout << "\n\n";
+	cout << "Number of Games:" << game_number << endl;
+	cout << "\n\n";
+	cout << "****" << endl;
+}
